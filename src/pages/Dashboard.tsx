@@ -4,6 +4,9 @@ import LiveCameraGrid from '@/components/dashboard/LiveCameraGrid';
 import AlertFeed from '@/components/dashboard/AlertFeed';
 import BlindSpotMap from '@/components/dashboard/BlindSpotMap';
 import PersonTimeline from '@/components/dashboard/PersonTimeline';
+import RiskGauge from '@/components/dashboard/RiskGauge';
+import CameraHealth from '@/components/dashboard/CameraHealth';
+import CurrentIncidentPanel from '@/components/dashboard/CurrentIncidentPanel';
 
 const Dashboard: React.FC = () => {
     return (
@@ -25,16 +28,31 @@ const Dashboard: React.FC = () => {
             {/* Top Stats Row */}
             <StatCards />
 
-            {/* Main Tactical Grid & Alerts */}
+            {/* Main Tactical Grid, Alerts & Incident Panel */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <LiveCameraGrid />
-                <AlertFeed />
+                <div className="col-span-1 flex flex-col gap-6">
+                    <CurrentIncidentPanel />
+                </div>
             </div>
 
             {/* Map & Analytics Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div className="lg:col-span-2">
+                    <BlindSpotMap />
+                </div>
+                <div className="lg:col-span-1">
+                    <AlertFeed />
+                </div>
+                <div className="lg:col-span-1">
+                    <PersonTimeline />
+                </div>
+            </div>
+
+            {/* Health & Risk Metrics Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <BlindSpotMap />
-                <PersonTimeline />
+                <CameraHealth />
+                <RiskGauge />
             </div>
         </div>
     );
