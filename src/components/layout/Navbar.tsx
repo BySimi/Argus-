@@ -4,12 +4,13 @@ import { useAppStore } from '@/store/useAppStore';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { formatTime } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import NotificationCenter from './NotificationCenter';
 
 const Navbar: React.FC = () => {
   const { toggleSidebar } = useAppStore();
   const [time, setTime] = useState(new Date());
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -39,9 +40,9 @@ const Navbar: React.FC = () => {
   return (
     <header className="h-16 flex items-center justify-between px-4 lg:px-6 bg-zinc-950/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-30">
       <div className="flex items-center gap-4 flex-1">
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={toggleSidebar}
           className="md:hidden text-zinc-400 hover:text-white"
         >
@@ -77,9 +78,9 @@ const Navbar: React.FC = () => {
           </span>
         </div>
 
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           className="text-zinc-400 hover:text-white"
           onClick={toggleFullscreen}
         >
@@ -87,10 +88,16 @@ const Navbar: React.FC = () => {
         </Button>
 
         <div className="relative">
-          <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-zinc-400 hover:text-white relative"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
             <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-2 w-2 h-2 bg-destructive rounded-full border border-zinc-950 animate-pulse-alert" />
           </Button>
+          <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
         </div>
 
         <div className="h-8 w-px bg-zinc-800/50 mx-1 hidden sm:block" />
